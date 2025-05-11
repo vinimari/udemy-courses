@@ -27,7 +27,7 @@ function isInvalidMeal(meal) {
   );
 }
 
-export async function shareMeal(formData) {
+export async function shareMeal(prevState, formData) {
   const meal = {
     title: formData.get("title"),
     image: formData.get("image"),
@@ -38,7 +38,7 @@ export async function shareMeal(formData) {
   };
 
   if (isInvalidMeal(meal)) {
-    throw new Error("Invalid input");
+    return { message: "Invalid input." };
   }
 
   await saveMeal(meal);
