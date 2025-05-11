@@ -1,5 +1,32 @@
 "use server";
 
+import { redirect } from "next/navigation";
+import { saveMeal } from "./meals";
+
+function isInvalidText(text) {
+  return !text || text.trim() === "";
+}
+
+function isInvalidEmail(email) {
+  return isInvalidText(email) || !meal.creator_email.inclues("@");
+}
+
+function isInvalidImage(image) {
+  return !image || image.size === 0;
+}
+
+function isInvalidMeal(meal) {
+  return (
+    isInvalidText(meal.title) ||
+    isInvalidText(meal.summary) ||
+    isInvalidText(meal.instructions) ||
+    isInvalidText(meal.creator) ||
+    isInvalidText(meal.creator_email) ||
+    isInvalidEmail(meal.creator_email) ||
+    isInvalidImage(meal.image)
+  );
+}
+
 export async function shareMeal(formData) {
   const meal = {
     title: formData.get("title"),
@@ -9,5 +36,11 @@ export async function shareMeal(formData) {
     creator: formData.get("name"),
     creator_email: formData.get("email"),
   };
-  console.log(meal);
+
+  if (isInvalidMeal(meal)) {
+    throw new Error("Invalid input");
+  }
+
+  await saveMeal(meal);
+  redirect("/meals");
 }
