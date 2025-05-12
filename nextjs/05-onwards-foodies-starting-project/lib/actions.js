@@ -9,7 +9,7 @@ function isInvalidText(text) {
 }
 
 function isInvalidEmail(email) {
-  return isInvalidText(email) || !meal.creator_email.inclues("@");
+  return isInvalidText(email) || !email.includes("@");
 }
 
 function isInvalidImage(image) {
