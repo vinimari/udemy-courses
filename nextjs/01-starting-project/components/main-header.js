@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function MainHeader() {
   return (
-    <main>
+    <header>
       <ul>
         <li>
           <Link href="/">Home</Link>
@@ -11,6 +11,6 @@ export default function MainHeader() {
           <Link href="/news">News</Link>
         </li>
       </ul>
-    </main>
+    </header>
   );
 }
