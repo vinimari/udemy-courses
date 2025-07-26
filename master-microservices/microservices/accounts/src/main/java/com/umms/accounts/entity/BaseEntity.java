@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @MappedSuperclass
 public class BaseEntity {
     @Column(updatable = false)
-    private LocalDateTime createAt;
+    private LocalDateTime createdAt;
 
     @Column(insertable = false)
     private LocalDateTime updatedAt;

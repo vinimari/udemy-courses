@@ -16,4 +16,6 @@ public class Customer extends BaseEntity {
     private String name;
     private String email;
     private String mobileNumber;
+    @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Account account;
 }
