@@ -2,14 +2,13 @@ package com.umms.accounts.service;
 
 import com.umms.accounts.dto.CustomerDto;
 import com.umms.accounts.dto.CustomerUpdateDto;
-import jakarta.transaction.Transactional;
 
 public interface AccountService {
     /**
      *
      * @param customerDto CustomerDto Object
      */
-    CustomerDto createAccount(CustomerDto customerDto);
+    CustomerDto createCustomerAndAccount(CustomerDto customerDto);
 
     /**
      *

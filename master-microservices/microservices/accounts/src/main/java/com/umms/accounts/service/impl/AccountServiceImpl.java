@@ -12,6 +12,7 @@ import com.umms.accounts.mapper.CustomerMapper;
 import com.umms.accounts.repository.AccountRepository;
 import com.umms.accounts.repository.CustomerRepository;
 import com.umms.accounts.service.AccountService;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +26,8 @@ public class AccountServiceImpl implements AccountService {
     private final CustomerRepository customerRepository;
 
     @Override
-    public CustomerDto createAccount(CustomerDto customerDto) {
+    @Transactional
+    public CustomerDto createCustomerAndAccount(CustomerDto customerDto) {
         String mobileNumber = customerDto.getMobileNumber();
         customerRepository.findByMobileNumber(mobileNumber).ifPresent(customer -> {
             throw new CustomerAlreadyExistsException("Customer already registered with given mobile number: " + mobileNumber);
@@ -66,6 +68,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    @Transactional
     public CustomerDto updateAccount(long customerId, CustomerUpdateDto customerUpdateDto) {
         Customer customer = customerRepository.findById(customerId).orElseThrow(
                 () -> new ResourceNotFoundException("Customer", "customerId", String.valueOf(customerId))
@@ -94,6 +97,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    @Transactional
     public void deleteAccount(String mobileNumber) {
         Customer customer = customerRepository.findByMobileNumber(mobileNumber).orElseThrow(
                 () -> new ResourceNotFoundException("Customer", "mobileNumber", mobileNumber)

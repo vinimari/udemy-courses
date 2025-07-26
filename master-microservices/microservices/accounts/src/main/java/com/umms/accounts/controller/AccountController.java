@@ -10,14 +10,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(path = "/api", produces = {MediaType.APPLICATION_JSON_VALUE})
+@RequestMapping(path = "/api/account", produces = {MediaType.APPLICATION_JSON_VALUE})
 @AllArgsConstructor
 public class AccountController {
     private AccountService accountsService;
 
-    @PostMapping("/create")
+    @PostMapping()
     public ResponseEntity<CustomerDto> createAccount(@RequestBody CustomerDto customerDto) {
-        CustomerDto customerCreatedDto = accountsService.createAccount(customerDto);
+        CustomerDto customerCreatedDto = accountsService.createCustomerAndAccount(customerDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(customerCreatedDto);
     }
 
@@ -36,7 +36,7 @@ public class AccountController {
     @DeleteMapping("/delete")
     public ResponseEntity<Void> deleteAccount(@RequestParam String mobileNumber) {
         accountsService.deleteAccount(mobileNumber);
-        return ResponseEntity.accepted().build();
+        return ResponseEntity.noContent().build();
     }
 
 }
