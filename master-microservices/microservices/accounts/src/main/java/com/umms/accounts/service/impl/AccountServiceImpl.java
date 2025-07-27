@@ -16,7 +16,6 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.Random;
 
 @Service
@@ -37,8 +36,6 @@ public class AccountServiceImpl implements AccountService {
             throw new CustomerAlreadyExistsException("Customer already registered with given email: " + email);
         });
         Customer customer = CustomerMapper.mapToCustomer(customerDto);
-        customer.setCreatedBy("Admin");
-        customer.setCreatedAt(LocalDateTime.now());
         customer.setAccount(createNewAccount(customer));
         Customer customerCreated = customerRepository.save(customer);
         return CustomerMapper.mapToCustomerDto(customerCreated);
@@ -50,8 +47,6 @@ public class AccountServiceImpl implements AccountService {
         account.setAccountNumber(generateAccountNumber());
         account.setAccountType(AccountConstants.SAVINGS);
         account.setBranchAddress(AccountConstants.ADDRESS);
-        account.setCreatedBy("Admin");
-        account.setCreatedAt(LocalDateTime.now());
         return account;
     }
 
